@@ -27,6 +27,7 @@ async function run() {
 
    const menuCollection = client.db("resDb").collection("menu");
    const reviewCollection = client.db("resDb").collection("reviews");
+   const cartCollection = client.db("resDb").collection("carts");
    
 
 
@@ -35,9 +36,17 @@ async function run() {
     res.send(result);
    })
 
+//reviews collection
    app.get('reviews', async(req, res) =>{
     const result = await reviewCollection.find().toArray();
     req.send(result)
+   })
+
+   //carts collection
+   app.post('/carts', async(req, res) => {
+    const cartItem = req.body;
+    const result = await cartCollection.insertOne(cartItem);
+    res.send(result);
    })
 
 
