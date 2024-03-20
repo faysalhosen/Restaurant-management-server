@@ -26,11 +26,18 @@ async function run() {
     await client.connect();
 
    const menuCollection = client.db("resDb").collection("menu");
+   const reviewCollection = client.db("resDb").collection("reviews");
+   
 
 
    app.get('/menu', async(req, res) =>{
     const result = await menuCollection.find().toArray();
     res.send(result);
+   })
+
+   app.get('reviews', async(req, res) =>{
+    const result = await reviewCollection.find().toArray();
+    req.send(result)
    })
 
 
@@ -40,7 +47,7 @@ async function run() {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
-    //await client.close();
+    // 21await client.close();
   }
 }
 run().catch(console.dir);
@@ -52,3 +59,18 @@ app.get('/', (req, res) => {
 app.listen(port, ()=> {
     console.log(`Restaurant is sitting on port ${port}`);
 })
+
+/**
+ * ----------------------
+ * Naming convention
+ * ----------------------------------
+ * 
+ * app.get('users')
+ * app.get('/users/:id')
+ * 
+ * app.post('users')
+ * app.put('/users/:id')
+ * app.patch('/users/:id')
+ * app.delete('/users/:id')
+ * 
+ */
